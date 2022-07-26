@@ -1,18 +1,14 @@
 function getComputerChoice() {
     const options = ["rock", "paper", "scissors"];
-    let randomChoice = options[Math.floor(Math.random()*options.length)];
-    return randomChoice;
+    return options[Math.floor(Math.random()*options.length)];
 }
 
 function getPlayerChoice() {
     let option = prompt("Play your choice: Rock, Paper or Scissors?");
-    let playerSelection = option.toLowerCase();
-    return playerSelection;
+    return option.toLowerCase();
 }
 
-function playGame(computerSelection, playerSelection) {
-    const computerSelection = getComputerChoice();
-    const playerSelection = getPlayerChoice();
+function playRound(computerSelection, playerSelection) {
     if ((playerSelection === "rock") && (computerSelection === "scissors")) {
         return "You win! Rock beats scissors";
     } else if ((playerSelection === "rock") && (computerSelection === "paper")) {
@@ -36,19 +32,23 @@ function playGame(computerSelection, playerSelection) {
     }
 }
 
-// console.log(computerSelection);
-// console.log(playGame(computerSelection ,playerSelection));
-
 function game() {
     let playerScore = 0;
     let computerScore = 0;
 
+    
     for (let i=0; i<5; i++) {
-        let result = playGame(computerSelection, playerSelection);
+        pSelection = getPlayerChoice();
+        cSelection = getComputerChoice();
+
+        let result = playRound(cSelection, pSelection);
         if (result.startsWith("You win")) {
             playerScore++;
         } else if (result.startsWith("You lose")) {
             computerScore++;
+        } else {
+            playerScore = playerScore;
+            computerScore = computerScore;
         }
     }
     if (playerScore>computerScore) {
@@ -58,5 +58,3 @@ function game() {
         return `You lost by ${computerScore-playerScore} points` 
     }
 }
-
-console.log(game());
