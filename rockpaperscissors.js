@@ -42,6 +42,7 @@ function game() {
         cSelection = getComputerChoice();
 
         let result = playRound(cSelection, pSelection);
+        console.log(result);
         if (result.startsWith("You win")) {
             playerScore++;
         } else if (result.startsWith("You lose")) {
@@ -52,9 +53,11 @@ function game() {
         }
     }
     if (playerScore>computerScore) {
-        return `You won by ${playerScore-computerScore} points` 
+        return `You won by ${playerScore-computerScore} points`;
     }
     else {
-        return `You lost by ${computerScore-playerScore} points` 
+        return `You lost by ${computerScore-playerScore} points`;
     }
 }
+
+game();
