@@ -3,61 +3,82 @@ function getComputerChoice() {
     return options[Math.floor(Math.random()*options.length)];
 }
 
-function getPlayerChoice() {
-    let option = prompt("Play your choice: Rock, Paper or Scissors?");
-    return option.toLowerCase();
+var compScore = 0;
+var playerScore = 0; 
+var button1 = document.querySelector('.button-1');
+var button2 = document.querySelector('.button-2');
+var button3 = document.querySelector('.button-3');
+
+const checkForWinner = (compScore, playerScore) => {
+    if (compScore===5) {
+        const p = document.createElement('p');
+        p.classList.add('player-won');
+        document.querySelector('.winner-display').append(p);
+        p.innerText = 'Computer Wins!';
+        button1.setAttribute('disabled', true)
+        button2.setAttribute('disabled', true)
+        button3.setAttribute('disabled', true)
+    } else if (playerScore===5) {
+        const p = document.createElement('p');
+        p.classList.add('player-won');
+        document.querySelector('.winner-display').append(p);
+        p.innerText = 'You Win!';
+        button1.setAttribute('disabled', true)
+        button2.setAttribute('disabled', true)
+        button3.setAttribute('disabled', true)
+    }
 }
+
+button1.addEventListener('click', () => {
+    const computerSelection = getComputerChoice();
+    const playerSelection = 'rock';
+    playRound(computerSelection, playerSelection);
+    checkForWinner(compScore, playerScore);
+});
+
+button2.addEventListener('click', () => {
+    const computerSelection = getComputerChoice();
+    const playerSelection = 'paper';
+    playRound(computerSelection, playerSelection);
+    checkForWinner(compScore, playerScore);
+});
+
+button3.addEventListener('click', () => {
+    const computerSelection = getComputerChoice();
+    const playerSelection = 'scissors';
+    playRound(computerSelection, playerSelection);
+    checkForWinner(compScore, playerScore);
+});
 
 function playRound(computerSelection, playerSelection) {
+    var display = document.querySelector('.display');
     if ((playerSelection === "rock") && (computerSelection === "scissors")) {
-        return "You win! Rock beats scissors";
+        playerScore++;
+        display.innerText = "You win! Rock beats scissors";
     } else if ((playerSelection === "rock") && (computerSelection === "paper")) {
-        return "You lose! Paper beats rock";
+        compScore++;
+        display.innerText = 'You lose! Paper beats rock';
     } else if ((playerSelection === "rock") && (computerSelection === "rock")) {
-        return "Draw!";
+        display.innerText = "Draw!";
     }
     if ((playerSelection === "paper") && (computerSelection === "scissors")) {
-        return "You lose! Scissors beats paper";
+        compScore++;
+        display.innerText = "You lose! Scissors beats paper";
     } else if ((playerSelection === "paper") && (computerSelection === "paper")) {
-        return "Draw";
+        display.innerText = "Draw";
     } else if ((playerSelection === "paper") && (computerSelection === "rock")) {
-        return "You win! Paper beats rock";
+        playerScore++;
+        display.innerText = "You win! Paper beats rock";
     }
     if ((playerSelection === "scissors") && (computerSelection === "scissors")) {
-        return "Draw";
+        display.innerText = "Draw";
     } else if ((playerSelection === "scissors") && (computerSelection === "paper")) {
-        return "You win! Scissors beats paper";
+        playerScore++;
+        display.innerText = "You win! Scissors beats paper";
     } else if ((playerSelection === "scissors") && (computerSelection === "rock")) {
-        return "You lose! Rock beats scissors";
+        compScore++;
+        display.innerText = "You lose! Rock beats scissors";
     }
 }
 
-function game() {
-    let playerScore = 0;
-    let computerScore = 0;
 
-    
-    for (let i=0; i<5; i++) {
-        pSelection = getPlayerChoice();
-        cSelection = getComputerChoice();
-
-        let result = playRound(cSelection, pSelection);
-        console.log(result);
-        if (result.startsWith("You win")) {
-            playerScore++;
-        } else if (result.startsWith("You lose")) {
-            computerScore++;
-        } else {
-            playerScore = playerScore;
-            computerScore = computerScore;
-        }
-    }
-    if (playerScore>computerScore) {
-        return `You won by ${playerScore-computerScore} points`;
-    }
-    else {
-        return `You lost by ${computerScore-playerScore} points`;
-    }
-}
-
-game();
